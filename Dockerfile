@@ -1,6 +1,6 @@
 FROM nvidia/cuda:10.0-base as base_image
-
-RUN apt-get update && apt-get install -y wget bzip2
+RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub
+RUN apt-get update && apt-get install -y wget bzip2 git
 RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
 RUN bash miniconda.sh -b -p /opt/conda && \
     rm miniconda.sh
@@ -17,5 +17,7 @@ RUN pip install -e ./ADVENT
 
 COPY ./ ./DADA
 RUN pip install -e ./DADA
+
+RUN pip install pyyaml==5.4.1
 
 WORKDIR ./DADA
